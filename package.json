@@ -1,0 +1,19 @@
+{
+  "name": "chattin",
+  "version": "1.0.0",
+  "description": "Chat app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christopher Krolmark",
+  "license": "ISC",
+  "dependencies": {
+    "express": "*",
+    "socket.io": "^1.5.1"
+  },
+  "devDependencies": {
+    "flightplan": "^0.6.14",
+    "fly": "^1.4.1"
+  }
+}
