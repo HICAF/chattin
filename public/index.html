@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chattin</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+	<div id="mySidebar" class="sidebar">
+	  <a href="javascript:void(0)" class="logo"><i class=" fa fa-coffee" aria-hidden="true"></i></a>
+	  <hr>
+	</div>
+
+	<div id="mySidenav" class="sidenav" onclick="openNav()">
+	  <a href="javascript:void(0)" class="logo"><i class=" fa fa-coffee" aria-hidden="true"></i></a>
+	  <hr>
+	  <ul class="list-group" id="users"></ul>
+	</div>
+
+	<!-- Use any element to open the sidenav -->
+	
+<div id="main">
+  <div class="container pages">
+
+    <div class="chat page row" onclick="closeNav()">
+    	<!-- <div class="col-xs-12 col-sm-4"> -->
+			<div class="navTop">
+				<h3>Top Menu</h3>
+				<ul class="list-group"></ul>
+			</div>
+		<!-- </div> -->
+		    <div class="chatArea">
+		        <ul class="messages"></ul>
+
+		        <div class="inputDiv">
+		    	<input class="inputMessage" placeholder="Type here..."/>
+		    </div>
+		    </div>
+		    
+    </div>
+    <div class="login page row">
+    	
+		    <div class="form">
+		        <label class="lblUser">What's your nickname?</label>
+		        <input class="usernameInput form-control" type="text" maxlength="14" />
+		    </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

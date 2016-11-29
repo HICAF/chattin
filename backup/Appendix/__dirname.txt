@@ -1,0 +1,20 @@
+Static middleware and sendFile() are mostly the same - they both pipe the file stream to response stream.
+
+The difference is that express.static will:
+
+- set ETag for you
+- allow you to set extension fallbacks (for example html -> htm)
+- sendFile on the other hand will:
+
+set the Content-Type response HTTP header based on file extension
+They both will:
+
+- set max-age property on Cache-Control
+- set Last-Modified header
+- allow you to set any other headers through options object
+- allow you to ignore dotfiles
+
+The main advantage of using static middleware is that you don't need to write specific route for every 
+file separately (or sanitize parameters) but just point the middleware to the right directory.
+
+http://stackoverflow.com/questions/31425284/express-static-vs-res-sendfile
