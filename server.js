@@ -4,6 +4,7 @@
 // var io = require('socket.io').listen(server);
 
 // Setup basic express server
+console.log("test 2");
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
