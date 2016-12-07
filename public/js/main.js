@@ -1,3 +1,11 @@
+var socket = io.connect(); 
+
+// if we get an "info" emit from the socket server then console.log the data we recive
+socket.on('info', function (data) {
+    console.log(data);
+});
+
+
 $(function() {
   console.log("test");
   var FADE_TIME = 150; // ms
@@ -28,7 +36,6 @@ $(function() {
   var $currentInput = $usernameInput.focus();
 
 
-  var socket = io();
 
   function addParticipantsMessage (data) {
     var message = '';

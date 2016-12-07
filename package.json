@@ -10,9 +10,10 @@
   "author": "Christopher Krolmark",
   "license": "ISC",
   "dependencies": {
-    "express": "*",
-    "rsync": "*",
-    "socket.io": "*"
+    "socket.io": "latest",
+    "express": "4.0.0",
+    "rsync": "*"
+    
   },
   "devDependencies": {
     "flightplan": "^0.6.14",
