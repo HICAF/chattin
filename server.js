@@ -11,12 +11,10 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 3000;
 
-server.listen(port, function () {
-  console.log('Server listening at port %d', port);
-});
+server.listen(3000, 'droplet_IP');
 
 // Routing
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + 'index.html'));
 
 
 console.log("Server running..");
