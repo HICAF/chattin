@@ -5,14 +5,16 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "node ./server.js"
+    "start": "node server.js"
   },
   "author": "Christopher Krolmark",
   "license": "ISC",
   "dependencies": {
     "socket.io": "latest",
     "express": "4.0.0",
-    "rsync": "*"
+    "rsync": "*",
+    "mysql": "^2.10.2",
+    "mongoose":"^4.7.2"
     
   },
   "devDependencies": {
