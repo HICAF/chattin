@@ -14,9 +14,7 @@
   "dependencies": {
     "socket.io": "latest",
     "express": "4.0.0",
-<<<<<<< HEAD
-    "mongoose":"^4.7.2"
-=======
+    "mongoose":"^4.7.2",
     "rsync": "*",
     "mysql": "^2.10.2",
     "mongoose":"^4.7.2"
@@ -25,15 +23,9 @@
   "engines": {
     "node":"6.9.1"
   },
-  "devDependencies": {
-    "flightplan": "^0.6.14",
-    "fly": "^1.4.1"
->>>>>>> origin/master
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/HICAF/chattin"
-<<<<<<< HEAD
   },
   "keywords": [
     "node",
@@ -42,7 +34,6 @@
     "socket.io"
   ],
   "license": "ISC"
-=======
   }
 >>>>>>> origin/master
 }
