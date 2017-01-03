@@ -2,25 +2,29 @@
   "name": "chattin",
   "version": "1.0.0",
   "description": "Chat app",
+  "author": "Christopher Krolmark",
   "private": true,
+  "engines": {
+    "node":"6.9.1"
+  },
   "main": "server.js",
   "scripts": {
-    "start": "node ./server.js"
+    "start": "node server.js"
   },
-  "author": "Christopher Krolmark",
-  "license": "ISC",
   "dependencies": {
     "socket.io": "latest",
     "express": "4.0.0",
-    "rsync": "*"
-    
-  },
-  "devDependencies": {
-    "flightplan": "^0.6.14",
-    "fly": "^1.4.1"
+    "mongoose":"^4.7.2"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/HICAF/chattin.git"
-  }
+    "url": "https://github.com/HICAF/chattin"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express",
+    "socket.io"
+  ],
+  "license": "ISC"
 }
