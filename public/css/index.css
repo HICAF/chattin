@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Fix user-agent */
 
 * {
@@ -575,4 +576,583 @@ i {
   width:100px;
   height:50px;
   display: none;
+=======
+/* Fix user-agent */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+html, input {
+  font-family:
+    "HelveticaNeue-Light",
+    "Helvetica Neue Light",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    "Lucida Grande",
+    sans-serif;
+}
+
+html, body {
+  height: 100%;
+  /*margin-top:30px;*/
+  padding: 0;
+  overflow: hidden;
+  
+}
+body {
+  background-color: #36393e;
+  
+}
+
+ul {
+  list-style: none;
+  word-wrap: break-word;
+}
+
+hr {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+/* Chat Page */
+
+.chat {
+      display: none;
+}
+
+#signUpPage {
+  display: none;
+}
+
+.signTxt {
+  font-size: 10px;
+  color: grey;
+}
+
+.navTop {
+      min-height: 20px;
+    
+    background-color: #36393e;
+    border-bottom: 1px solid #1e2124;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+
+  height: 61px;
+  outline: none;
+  padding-left: 10px;
+  font-size: 100%;
+  /*left:80px;*/
+  position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.inputMessage {
+
+    border-radius: 5px;
+    height: 35px;
+
+    width: 100%;
+}
+
+.inputDiv {
+  /*border: 1px solid #000;*/
+outline: none;
+    padding: 30px 30px 1px 30px;
+    font-size: 100%;
+    height: 80px;
+    position: fixed;
+    bottom: 0px;
+    margin: 0;
+    width: 85%;
+}
+
+
+
+
+/* Login Page */
+.swipes {
+  padding-left: 0px;
+  padding-top: 30px;
+  text-align:center;
+}
+
+.userAvatar {
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.chatTitle {
+  margin: 16px 0px 0px 19px;
+    display: inline-block;
+    font-size: 22px;
+    color: #777;
+    text-align: center;
+}
+.topMenu {
+      float: right;
+    margin-right: 90px;
+}
+.topMenuBtn {
+  margin: 14px 0px 0px 10px;
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  border-radius: 10px;
+  /*background: #777;*/
+  color: #777;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.topMenuBtn .fa{
+  padding-top: 8px;
+  font-size: 20px;
+}
+
+.topMenuBtn:hover {
+  /*background: #ccc;*/
+  color: #ccc;
+  transition: 0.3s;
+}
+
+.verticalLine {
+    margin: 10px 0px -4px 10px;
+    display: inline-block;
+    height: 26px;
+    width: 0;
+    border: 0;
+    border-left: 2px;
+    border-style: solid;
+    border-color: #555;
+}
+
+.swipes li {
+  margin: 0 20px 0 20px;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  border-radius: 100%;
+  background: #777;
+  color: #ccc;
+}
+
+.swipes li i{
+  padding-top: 13px;
+  font-size: 25px;
+}
+
+.swipes li:hover {
+  background: #ccc;
+  color: #222;
+}
+.swipes .active {
+  background: #222;
+  color:#ccc;
+}
+
+.login.page .form {
+  height: 100px;
+  margin-top: -100px;
+  position: absolute;
+
+  text-align: center;
+  top: 50%;
+  width: 100%;
+
+  
+}
+
+.login.page .form .logSignInput {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  padding-bottom: 15px;
+  text-align: center;
+  /*width: 100%;*/
+
+  margin: auto;
+    width: 50%;
+    padding: 10px;
+} 
+
+.login.page .title, .login.page .logSignInput {
+  color: #eee;
+  font-weight: 100;
+}
+
+.lblUser {
+  color: #eee;
+}
+
+.form {
+  text-align: center;
+   width: 100%;
+  position: absolute;
+      top: 45%;
+}
+
+.popWindow {
+        width: 220px;
+    background-color: #1e2124;
+    position: absolute;
+    top: 35px;
+    margin: 0px 0px 0px -200px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+.popWindow hr{
+  position: relative;
+    top: 35px;
+    width: 90%;
+        border: 1px solid black;
+}
+
+.searchUser{
+
+  margin: 0px 0px 0px 0px;
+
+}
+
+.pendUser {
+      padding: 5px;
+}
+
+.addFPendBtn {
+  display: inline-block; 
+  color: black;
+  padding: 2px 5px 2px 5px;
+  cursor: pointer;
+}
+
+.pendAdd, .WpendAdd {
+        background-color: #26A65B;
+    border-radius: 10px;
+    float: left;
+    margin-top: 7px;
+    margin-right: -15px;
+    margin-left: -25px;
+
+    transition: 0.1s;
+}
+
+.pendAdd:hover, .WpendAdd:hover {
+  background-color: #87D37C;
+  border-radius: 3px;
+  transition: 0.1s;
+}
+
+.pendNo {
+    background-color: #96281B;
+    border-radius: 10px;
+
+    float: right;
+    margin-right: -22px;
+    margin-top: 7px;
+    transition: 0.1s;
+}
+
+.pendNo:hover {
+  background-color: #F22613;
+  border-radius: 3px;
+  transition: 0.1s;
+}
+
+#searchedUsers, #pendingUsers{
+
+      position: relative;
+    margin: -3px 0px 0px 0px;
+    padding: 8px;
+    width: 100%;
+    background-color: #1e2124;
+    border-radius: 5px;
+    border-top: 1px solid #999;
+
+}
+
+
+
+.navInput {
+    position: relative;
+    margin: 15px 0px 0px 18px;
+    width: 180px;
+    left: 0px;
+    border-radius: 5px;
+    /*display: none;*/
+    /*transition: 0.3s;*/
+}
+
+/* Pages */
+
+.pages {
+  height: 100%;
+  width: 100%;
+}
+
+.page {
+
+}
+
+.topper {
+  height: 50px;
+}
+
+
+/* Messages */
+
+.chatArea {
+  height: 100%;
+  padding-bottom: 60px;
+}
+
+.messages {
+    
+    height: 87%;
+    width: 100%;
+    position: absolute;
+    bottom: 100px;
+    margin-bottom: -53px;
+    overflow-y: scroll;
+     /*overflow: hidden; */
+    padding: 0px 10px 10px 10px;
+}
+
+#messages::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+#messages::-webkit-scrollbar
+{
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+#messages::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #D62929;
+}
+
+.message.typing .messageBody {
+  color: gray;
+}
+
+.message {
+  
+  
+  background-color:#36393e;
+  padding: 20px 20px 20px 20px;
+  border-top: 1px solid #666;
+  color: #eee;
+  margin-top: 5px;
+}
+
+.username {
+  font-weight: 700;
+  overflow: hidden;
+  padding-right: 15px;
+  text-align: right;
+
+}
+
+.messageBody {
+  line-height: 170%;
+}
+
+/* Font */
+
+.messages {
+  font-size: 100%;
+}
+
+.inputMessage {
+  font-size: 100%;
+}
+
+.log {
+  color: gray;
+  font-size: 70%;
+  margin: 5px;
+  text-align: center;
+}
+
+
+/* The side navigation menu */
+.sidebar {
+    height: 100%; /* 100% Full-height */
+    width: 0px; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 3; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: #1e2124; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0px; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: #2e3136; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #2c3e50;
+    display: block;
+    transition: 0.3s
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebar a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidebar .logo {
+    position: absolute;
+    top: 5px;
+    width: 100%;
+    /*right: 25px;*/
+    font-size: 25px;
+    /*margin-left: 50px;*/
+    left: -5px;
+}
+
+.sidenav .logo {
+    position: absolute;
+    top: 15px;
+    width: 100%;
+    /*right: 25px;*/
+    font-size: 25px;
+    /*margin-left: 50px;*/
+    left: -5px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+    transition: margin-left .5s;
+}
+
+i {
+  
+}
+
+.sidebar hr {
+  border-top: 1px solid #8c8b8b;
+  border-bottom: 1px solid #2c3e50;
+  width: 90%;
+}
+
+.sidenav hr {
+  background-color: #1e2124;
+  border-top: 1px solid #1e2124;
+  width: 100%;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+.uUser {
+    position: absolute;
+    bottom: 0px;
+    /* text-align: center; */
+    color: #fff;
+    width: 100%;
+    cursor: pointer;
+    padding: 15px 0px 15px 20px;
+    /* margin-left: -20px; */
+    /*border-bottom: 1px solid #1e2124;*/
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.3);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.3);
+}
+
+
+.aUser {
+  color:#fff;
+  cursor: pointer;
+  padding: 15px 0px 15px 20px;
+  margin-left: -20px;
+  border-bottom: 1px solid #1e2124;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.1);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.1);
+  
+}
+
+.aGroup {
+  color: #fff;
+    cursor: pointer;
+    padding: 15px 0px 15px 20px;
+    margin-left: 14px;
+    border-bottom: 1px solid #1e2124;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.1);
+    height: 50px;
+    width: 50px;
+    border-radius: 30%;
+    background: red;
+}
+
+.offlineU {
+  color:#555;
+  cursor: pointer;
+  padding: 15px 0px 15px 20px;
+  margin-left: -20px;
+  border-bottom: 1px solid #1e2124;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.1);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.1);
+}
+
+
+.whispName{
+  text-decoration: none;
+}
+
+#yourUsers{
+  transition: margin-left .5s;
+  margin-top: -20px; 
+}
+
+#users {
+  transition: margin-left .5s;
+  margin-top: -20px; 
+}
+#whispUser {
+  position: fixed;
+  top:50%;
+  right:50%;
+  width:100px;
+  height:50px;
+  display: none;
+>>>>>>> origin/master
 }
