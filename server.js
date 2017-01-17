@@ -23,13 +23,13 @@ server.listen(port, function () {
 });
 
 
-mongoose.connect('mongodb://localhost/chattin', function(err){
-  if(err){
-    console.log(err)
-  }else{
-    console.log("Connected to MongoDB");
-  }
-})
+// mongoose.connect('mongodb://localhost/chattin', function(err){
+//   if(err){
+//     console.log(err)
+//   }else{
+//     console.log("Connected to MongoDB");
+//   }
+// })
 
 
 
