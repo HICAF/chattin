@@ -41,6 +41,7 @@ $(function() {
   var typing = false;
   var lastTypingTime;
   var $currentInput;
+  var groupInvNames = [];
 
 
 
@@ -423,9 +424,21 @@ $(function() {
 
     if (event.which === 13) {
       if (username) {
-        sendMessage();
-        socket.emit('stop typing');
-        typing = false;
+        if ($("#groupInput").is(":focus")) {
+          console.log("focus on groupInput");
+          var groupNameSet = $("#groupInput").val();
+
+          
+
+
+          addGroupToUsers(groupNameSet);
+
+
+        } else {
+          sendMessage();
+          socket.emit('stop typing');
+          typing = false;
+        }
       } else {
         if($(".logSwipe").hasClass("active")){
           setUsername();
@@ -474,10 +487,7 @@ $(function() {
 
 
   socket.on('load old messages', function(data){
-
-
       
-      // 3 as in the 3 latest messages
       for(var i = 0; i < data[0].messages.length; i++){
         addChatMessage(data[0].messages[i]);
       }
@@ -517,6 +527,7 @@ $(function() {
       socket.on('load all users', function(docs){
         var html = '';
         var youHtml = '';
+        var groupWinHtml = '';
         var pends = '';
         var listOfPend = [];
 
@@ -530,6 +541,7 @@ $(function() {
           for (var x = 0; x < docs[i].friends.length; x++) {
             //Check if user has you as friend
             if(docs[i].friends[x] == username) {
+              groupWinHtml += '<li class="invUser" id="'+docs[i].username+'"><img class="userAvatar" src="'+docs[i].avatar.path+'" alt="avatar_id_'+i+'"><strong>'+docs[i].username+'</strong></li>'
               //Go through friends groups
               for (var g = 0; g < docs[i].groups.length; g++) {
                 //Checks if friend is part of current group
@@ -562,6 +574,7 @@ $(function() {
         }
         $users.html(html);
         $('#yourUsers').html(youHtml);
+        $('#makeGroupUsers').html(groupWinHtml);
         $("#pendingUsers").html(pends);
       });
 
@@ -574,8 +587,8 @@ $(function() {
 
         var html = '';
         // console.log("user: "+user+" user[0]: "+user[0]);
-        for (var i = 0; i < user.length; i++) {
-          html += '<li class="aGroup" id="'+user[i].groups+'" onClick="focusWhisp(this.id)"><strong>'+user[i].groups+'</strong></li>';
+        for (var i = 0; i < user[0].groups.length; i++) {
+          html += '<li class="aGroup" id="'+user[0].groups[i]+'"><div class="chatLbl"><strong>'+user[0].groups[i]+'</strong></div></li>';
         }
 
 
@@ -638,6 +651,74 @@ $(function() {
     });
 
     
+    $(document).on('click', '.invUser', function (e) {
+
+      var specName = this.id;
+
+      if($(this).hasClass("ActiveInvUser")){
+
+        var index = groupInvNames.indexOf(specName);
+        groupInvNames.splice(index, 1);
+
+        $(this).removeClass("ActiveInvUser");
+
+      } else {
+
+        $(this).addClass("ActiveInvUser");
+
+        groupInvNames.push(specName);
+
+      }
+
+      e.preventDefault();
+    });
+
+    $( ".aGroup" ).hover(function() {
+      $(this).children(".chatLbl").fadeIn( 500 );
+      $(this).children(".chatLbl").fadeOut( 500 );
+    });
+
+    $(document).on('click', '.aGroup', function (e) {
+
+      var specName = this.id;
+      var chatNameTitle = $('.chatTitle').text();
+
+      if(specName != chatNameTitle){
+
+        $('#whispUser').val(specName);
+        // $(this).addClass("userFocus");
+        $('.chatTitle').text(specName);
+
+        $( ".message" ).remove();
+        socket.emit('Chat change', specName, function(data){})
+
+
+      }
+
+      e.preventDefault();
+
+    });
+
+    $(document).on('click', '#logoOpen', function (e) {
+
+      document.getElementById("mySidenav").style.width = "300px";
+      document.getElementById("main").style.marginLeft = "300px";
+      document.getElementById("users").style.marginLeft = "100px";
+      $("#mySidebar").addClass("navOpened");
+
+      e.preventDefault();
+    });
+
+    $(document).on('click', '.chatArea', function (e) {
+
+      document.getElementById("mySidenav").style.width = "80px";
+      document.getElementById("main").style.marginLeft = "80px";
+      document.getElementById("users").style.marginLeft = "0px";
+      $("#mySidebar").removeClass("navOpened");
+
+      e.preventDefault();
+    });
+
 
 
 
@@ -685,9 +766,37 @@ $(function() {
 
       });
 
+    
 
 
-      
+
+  function addGroupToUsers(groupInv){
+
+    $('.chatTitle').text(groupInv);
+
+    socket.emit('Make new group', groupInv, function(data){
+    }); 
+
+    
+    socket.emit('Invite to group', groupInvNames, groupInv, function(data){
+    });
+
+
+
+    console.log("This is the invited users: "+groupInvNames);
+
+
+
+    groupInvNames = [];
+
+    $(".invUser").removeClass("ActiveInvUser");
+
+    $("#groupInput").val('');
+    document.getElementById("groupWin").style.height = "0px";
+    document.getElementById("groupWin").style.border = "0px solid black";
+    $("#groupWin").fadeOut(500);
+    
+  }
 
 
 
@@ -695,30 +804,18 @@ $(function() {
 
 });
   // Side Navigation menu events
-function openNav() {
 
-    document.getElementById("mySidenav").style.width = "300px";
-    document.getElementById("main").style.marginLeft = "300px";
-    document.getElementById("users").style.marginLeft = "100px";
-    $("#mySidebar").addClass("navOpened");
-}
-
-
-function closeNav() {
-
-    document.getElementById("mySidenav").style.width = "80px";
-    document.getElementById("main").style.marginLeft = "80px";
-    document.getElementById("users").style.marginLeft = "0px";
-    $("#mySidebar").removeClass("navOpened");
-   
-
-    
-}
 
 var mouse_is_inside = false;
 var friendNavOpen = false;
 
 $('#friendWin').hover(function(){ 
+  mouse_is_inside=true; 
+}, function(){ 
+  mouse_is_inside=false; 
+});
+
+$('#groupWin').hover(function(){ 
   mouse_is_inside=true; 
 }, function(){ 
   mouse_is_inside=false; 
@@ -739,24 +836,22 @@ $("#addFriBtn .fa").click(function(){
     $("#friendWin").fadeIn(500);
 })
 
-   
-  
 
-
-$("#mySidebar").click(function(){
-  
-  if($("#mySidebar").hasClass("navOpened"))
-  {
-    closeNav();
-    
-  } 
-  else 
-  {
-    openNav();
-    
+$("body").mouseup(function(){ 
+  if(mouse_is_inside == false) {
+    $("#groupInput").val('');
+    document.getElementById("groupWin").style.height = "0px";
+    document.getElementById("groupWin").style.border = "0px solid black";
+    $("#groupWin").fadeOut(500);
   }
-
 });
+
+$("#makeGroBtn .fa").click(function(){
+    document.getElementById("groupWin").style.height = "100%";
+    document.getElementById("groupWin").style.border = "1px solid black";
+    $("#groupWin").fadeIn(500);
+})
+   
 
 $(".logSwipe").click(function(){
   console.log("log");
@@ -784,15 +879,10 @@ $(".signSwipe").click(function(){
   } 
 
 
-
-
 });
 
 
-// onClick="focusWhisp(this.val())"
-    function focusWhisp(id)
-    {
-      $('#whispUser').val(id);
-      // $(this).addClass("userFocus");
-      $('.chatTitle').text(id);
-    }
+
+
+
+

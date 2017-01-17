@@ -14,13 +14,13 @@
 </head>
 <body>
 	<div id="mySidebar" class="sidebar">
-	  <a href="javascript:void(0)" class="logo"><i class=" fa fa-coffee" aria-hidden="true"></i></a>
+	  <a href="javascript:void(0)" class="logo" id="logoOpen"><i class=" fa fa-coffee" aria-hidden="true"></i></a>
 	  <hr>
 	  <ul class="list-group" id="groups"></ul>
 	  <ul class="list-group" id="yourUsers"></ul>
 	</div>
 
-	<div id="mySidenav" class="sidenav" onclick="openNav()">
+	<div id="mySidenav" class="sidenav">
 	  <a href="javascript:void(0)" class="logo"><i class=" fa fa-coffee" aria-hidden="true"></i></a>
 	  <hr>
 	  <ul class="list-group" id="users"></ul>
@@ -31,7 +31,7 @@
 <div id="main">
   <div class="container pages">
 
-    <div class="chat page row" onclick="closeNav()">
+    <div class="chat page row">
     	<!-- <div class="col-xs-12 col-sm-4"> -->
 			<div class="navTop">
 				<!-- <h3>Top Menu</h3> -->
@@ -43,13 +43,18 @@
 						<div id="friendWin" class="popWindow">
 							<input class="navInput" id="friendInput" placeholder="Search..."/>
 							</br>
-							<hr >
 							<ul class="list-group" id="searchedUsers"></ul>
 							<ul class="list-group" id="pendingUsers"></ul>
 						</div>
 					</li>
 					<li id="makeGroBtn" class="topMenuBtn">
 						<i class="fa fa-pencil-square-o" aria-hidden="true"></i>	
+						<div id="groupWin" class="popWindow">
+							<input class="navInput" id="groupInput" placeholder="Group Name"/>
+							</br>
+							<ul class="list-group" id="makeGroupUsers"></ul>
+						</div>
+
 					</li>
 					<li class="verticalLine">
 					</li>

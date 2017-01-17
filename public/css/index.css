@@ -292,15 +292,15 @@ outline: none;
   transition: 0.1s;
 }
 
-#searchedUsers, #pendingUsers{
+#searchedUsers, #pendingUsers, #makeGroupUsers{
 
-      position: relative;
-    margin: -3px 0px 0px 0px;
-    padding: 8px;
+    padding: 0px 0px 10px 0px;
+    position: relative;
     width: 100%;
     background-color: #1e2124;
     border-radius: 5px;
     border-top: 1px solid #999;
+    margin-top: 19px;
 
 }
 
@@ -534,8 +534,7 @@ i {
 .aGroup {
   color: #fff;
     cursor: pointer;
-    padding: 15px 0px 15px 20px;
-    margin-left: 14px;
+    margin: 15px 0px 0px 14px;
     border-bottom: 1px solid #1e2124;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.1);
     height: 50px;
@@ -554,6 +553,21 @@ i {
   box-shadow: inset 0 1px 1px rgba(0,0,0,.1);
 }
 
+.chatLbl {
+  /*display: none;*/
+      /* display: none; */
+    background-color: #1e2124;
+    color: #fff;
+    font-size: 8px;
+    text-align: center;
+    /* transition: 0.5s; */
+    /* position: absolute; */
+    width: 100%;
+    padding: -13px;
+    /* top: 0px; */
+    /* left: 0px; */
+}
+
 
 .whispName{
   text-decoration: none;
@@ -568,6 +582,15 @@ i {
   transition: margin-left .5s;
   margin-top: -20px; 
 }
+
+.invUser {
+  padding: 10px 0px 0px 0px;
+}
+
+.ActiveInvUser {
+  background-color: #3f4346;
+}
+
 #whispUser {
   position: fixed;
   top:50%;

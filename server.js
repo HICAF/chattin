@@ -495,7 +495,73 @@ console.log("HELLO2");
     }
   });
 
+  socket.on('Make new group', function(groupInv){
 
+      var newGroup = new Chat({
+            groupName: groupInv,
+            messages:[{
+              username: "Chat-Admin",
+              message: "Welcome to "+groupInv
+            }]
+      });
+
+      newGroup.save(function(err2) {
+      if (err2) throw err2;
+        
+        console.log(groupInv+' created!');
+      });
+
+  })
+
+  socket.on('Invite to group', function(groupInvNames, groupInv){
+
+    for (var i = 0; i < groupInvNames.length; i++) {
+
+      User.findOneAndUpdate(
+        { username: groupInvNames[i] }, 
+        { $push: { groups: groupInv } }, 
+        function(err) {
+        if (err) throw err;
+
+      });
+
+      User.find({ username: groupInvNames[i] }, function(err, user) {
+        socket.broadcast.emit('load all groups', user);
+      })
+    }
+
+    User.findOneAndUpdate(
+        { username: socket.username }, 
+        { $push: { groups: groupInv } }, 
+        function(err) {
+        if (err) throw err;
+
+    });
+
+    User.find({ username: socket.username }, function(err, user) {
+      if (err) throw err;
+
+      // object of the user
+      socket.emit('load all groups', user);
+      updateUsernames();
+      console.log(user);
+    });
+
+  })
+
+  socket.on('Chat change', function(groupName){
+
+            var query = Chat.find({groupName: groupName}) 
+            query.sort('-created').limit(50).exec(function(err2, docs){
+              if(err2) throw err2;
+                  // console.log(docs);
+
+              socket.emit('load old messages', docs);
+            })
+
+  })
+
+  
 
 
 
