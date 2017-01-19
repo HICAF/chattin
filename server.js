@@ -17,13 +17,18 @@ var io = require('socket.io')(server);
 var port = process.env.PORT || 3000;
 var mongopw = "Polo2424";
 var uri = "mongodb://hicaf:"+mongopw+"@chattindb-shard-00-00-jfsq4.mongodb.net:27017,chattindb-shard-00-01-jfsq4.mongodb.net:27017,chattindb-shard-00-02-jfsq4.mongodb.net:27017/admin?ssl=true&replicaSet=chattindb-shard-0&authSource=admin";
-
+// var MongoClient = require('mongodb').MongoClient;
 
 
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
+
+
+// MongoClient.connect(uri, function(err, db) {
+//   db.close();
+// });
 
 mongoose.connect(uri, function(err){
   if(err){
