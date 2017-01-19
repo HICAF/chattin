@@ -15,9 +15,9 @@ var mongoose = require('mongoose');
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 3000;
+var MongoClient = require('mongodb').MongoClient;
 var mongopw = "Polo2424";
 var uri = "mongodb://hicaf:"+mongopw+"@chattindb-shard-00-00-jfsq4.mongodb.net:27017,chattindb-shard-00-01-jfsq4.mongodb.net:27017,chattindb-shard-00-02-jfsq4.mongodb.net:27017/admin?ssl=true&replicaSet=chattindb-shard-0&authSource=admin";
-// var MongoClient = require('mongodb').MongoClient;
 
 
 server.listen(port, function () {
@@ -30,12 +30,14 @@ server.listen(port, function () {
 //   db.close();
 // });
 
-mongoose.connect(uri, function(err){
+MongoClient.connect(uri, function(err, db) {
   if(err){
     console.log(err)
   }else{
     console.log("Connected to MongoDB");
   }
+
+  db.close();
 })
 
 
