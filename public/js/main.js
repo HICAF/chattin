@@ -66,7 +66,7 @@ $(function() {
 
 
   function setUsername () {
-    
+    console.log("logging");
     username = cleanInput($usernameInput.val().trim());
     password = cleanInput($passwordInput.val());
 

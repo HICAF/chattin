@@ -193,7 +193,7 @@ io.on('connection', function (socket) {
 
 
   socket.on('find sign user', function(data){
-    console.log("Signing");
+
     User.find({ username: data }, function(err, user) {
       if (err) throw err;
 
@@ -207,7 +207,7 @@ io.on('connection', function (socket) {
 
   
   socket.on('login user', function(username, password, callback){
-
+    console.log("logging");
     User.find({ username: username }, function(err, user) {
       if (err){
         console.log('Bad login');
