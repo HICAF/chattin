@@ -10,6 +10,7 @@ var fs = require('fs');
 var mysql = require('mysql');
 var app = express();
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 
 
 var server = require('http').createServer(app);
