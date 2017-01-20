@@ -120,6 +120,7 @@ $(function() {
   // SIGN UP
 
   function setSignUsername() {
+    console.log("Signing");
     username = cleanInput($signUsernameInput.val().trim());
     password = cleanInput($signPasswordInput.val());
     repPassword = cleanInput($signRepPasswordInput.val());

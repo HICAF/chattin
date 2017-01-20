@@ -193,6 +193,7 @@ io.on('connection', function (socket) {
 
 
   socket.on('find sign user', function(data){
+    console.log("Signing");
     User.find({ username: data }, function(err, user) {
       if (err) throw err;
 
