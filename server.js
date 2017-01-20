@@ -207,7 +207,7 @@ io.on('connection', function (socket) {
 
   
   socket.on('login user', function(username, password, callback){
-    console.log("logging");
+    console.log("logging"+ username);
     User.find({ username: username }, function(err, user) {
       if (err){
         console.log('Bad login');
