@@ -31,15 +31,31 @@ server.listen(port, function () {
 //   db.close();
 // });
 
-MongoClient.connect(uri, function(err, db) {
-  if(err){
-    console.log(err)
-  }else{
-    console.log("Connected to MongoDB");
-  }
+var mongoose = require('mongoose');
+mongoose.connect(uri);
 
-  db.close();
-})
+var Cat = mongoose.model('Cat', { name: String });
+
+var kitty = new Cat({ name: 'Zildjian' });
+kitty.save(function (err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('meow');
+  }
+});
+
+
+
+// MongoClient.connect(uri, function(err, db) {
+//   if(err){
+//     console.log(err)
+//   }else{
+//     console.log("Connected to MongoDB");
+//   }
+
+//   db.close();
+// })
 
 
 
@@ -193,7 +209,6 @@ io.on('connection', function (socket) {
 
 
   socket.on('find sign user', function(data){
-
     User.find({ username: data }, function(err, user) {
       if (err) throw err;
 
@@ -207,7 +222,7 @@ io.on('connection', function (socket) {
 
   
   socket.on('login user', function(username, password, callback){
-    console.log("logging"+ username);
+
     User.find({ username: username }, function(err, user) {
       if (err){
         console.log('Bad login');
