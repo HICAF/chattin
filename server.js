@@ -234,54 +234,60 @@ io.on('connection', function (socket) {
 
           
           console.log(user[0].username);
-          // object of the user
-          if (user[0].password == password) {
-            if (addedUser) return;
-            socket.emit('load all groups', user);
-  
-            console.log("trying to find messages");
-            var query = Chat.find({groupName: 'general-chat'}) 
-            query.sort('-created').limit(50).exec(function(err2, docs){
-              if(err2) throw err2;
-                  // console.log(docs);
+          bcrypt.compare(password, hash, function(err, isMatch) {
+            console.log("password: "+password );
+            console.log("hash: "+hash);
+            console.log(err);
+            console.log(isMatch);
 
-              socket.emit('load old messages', docs);
-            })
+            if (user[0].password == password) {
+              if (addedUser) return;
+              socket.emit('load all groups', user);
+    
+              console.log("trying to find messages");
+              var query = Chat.find({groupName: 'general-chat'}) 
+              query.sort('-created').limit(50).exec(function(err2, docs){
+                if(err2) throw err2;
+                    // console.log(docs);
 
-            // we store the username in the socket session for this client
-            socket.username = user[0].username;
+                socket.emit('load old messages', docs);
+              })
 
-            ++numUsers;
-            addedUser = true;
-            socket.emit('login', {
-              numUsers: numUsers
-            });
-            // echo globally (all clients) that a person has connected
-            socket.broadcast.emit('user joined', {
-              username: socket.username,
-              numUsers: numUsers
-            });
+              // we store the username in the socket session for this client
+              socket.username = user[0].username;
 
-            users[socket.username] = socket;
-            // users.push(socket.username);
-            console.log("socket.username: "+ socket.username+" "+callback);
-            
-            callback(true);
-            console.log('User: '+socket.username+' logged in!');
+              ++numUsers;
+              addedUser = true;
+              socket.emit('login', {
+                numUsers: numUsers
+              });
+              // echo globally (all clients) that a person has connected
+              socket.broadcast.emit('user joined', {
+                username: socket.username,
+                numUsers: numUsers
+              });
 
-            user[0].online = true;
+              users[socket.username] = socket;
+              // users.push(socket.username);
+              console.log("socket.username: "+ socket.username+" "+callback);
+              
+              callback(true);
+              console.log('User: '+socket.username+' logged in!');
 
-            user[0].save(function(err) {
-              if (err) throw err;
+              user[0].online = true;
 
-              console.log(user[0].username+" is online: "+user[0].online);
-              updateUsernames();
-            });
+              user[0].save(function(err) {
+                if (err) throw err;
 
-          } else {
-            callback(false);
-            console.log("bad password "+password+" | user.password "+user[0].password);
-          }
+                console.log(user[0].username+" is online: "+user[0].online);
+                updateUsernames();
+              });
+
+            } else {
+              callback(false);
+              console.log("bad password "+password+" | user.password "+user[0].password);
+            }
+          });
           
         } else {
           callback(false);
@@ -497,10 +503,9 @@ io.on('connection', function (socket) {
 
   socket.on('loggedOutNow', function () {
     
-console.log("HELLO1");
+
     if (addedUser) {
       --numUsers;
-console.log("HELLO2");
 
       User.findOneAndUpdate({ username: socket.username }, { online: false }, function(err, user) {
         if (!err) {
@@ -513,9 +518,7 @@ console.log("HELLO2");
             username: socket.username,
             numUsers: numUsers
           });
-          console.log("HELLO4"+socket.username);
           updateUsernames();
-          console.log("HELLO");
           socket.username = '';
         }
         
