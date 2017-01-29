@@ -16,7 +16,7 @@ var bcrypt = require('bcryptjs');
 
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 8080;
 var MongoClient = require('mongodb').MongoClient;
 var mongopw = "Polo2424";
 var uri = "mongodb://hicaf:"+mongopw+"@chattindb-shard-00-00-jfsq4.mongodb.net:27017,chattindb-shard-00-01-jfsq4.mongodb.net:27017,chattindb-shard-00-02-jfsq4.mongodb.net:27017/admin?ssl=true&replicaSet=chattindb-shard-0&authSource=admin";
@@ -35,16 +35,6 @@ server.listen(port, function () {
 var mongoose = require('mongoose');
 mongoose.connect(uri);
 
-var Cat = mongoose.model('Cat', { name: String });
-
-var kitty = new Cat({ name: 'Zildjian' });
-kitty.save(function (err) {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('meow');
-  }
-});
 
 
 
