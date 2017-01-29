@@ -11,6 +11,7 @@ var mysql = require('mysql');
 var app = express();
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
+var bcrypt = require('bcryptjs');
 
 
 var server = require('http').createServer(app);
@@ -368,73 +369,79 @@ io.on('connection', function (socket) {
     
     var defAvaN= Math.floor((Math.random() * 6) + 1);
     var imgPath = '/img/standin/Avatar_0'+defAvaN+'.png';
+
+    bcrypt.genSalt(10, function(err, salt) {
+      bcrypt.hash(password, salt, function(err, hash) {
+          // Store hash in your password DB. 
     
-    var newUser = new User({
-      username: username,
-      password: password,
-      friends: "Chat-Admin",
-      groups: "general-chat",
-      avatar: {
-        path: imgPath,
-        contentType: 'image/png'
-      }
-    });
-    newUser.save(function(err) {
-      if(err){
-        console.log('used name');
-        callback(false);
-      } 
+        var newUser = new User({
+          username: username,
+          password: hash,
+          friends: "Chat-Admin",
+          groups: "general-chat",
+          avatar: {
+            path: imgPath,
+            contentType: 'image/png'
+          }
+        });
+        newUser.save(function(err) {
+          if(err){
+            console.log('used name');
+            callback(false);
+          } 
 
-      if (!err) {
-        if (addedUser) return;
+          if (!err) {
+            if (addedUser) return;
 
-          console.log("trying to find messages");
-          var query = Chat.find({groupName: 'general-chat'}) 
-          query.sort('-created').limit(50).exec(function(err2, docs){
-            if(err2) throw err2;
+              console.log("trying to find messages");
+              var query = Chat.find({groupName: 'general-chat'}) 
+              query.sort('-created').limit(50).exec(function(err2, docs){
+                if(err2) throw err2;
 
-            socket.emit('load old messages', docs);
-            console.log("DOCS: "+docs);
-          })
+                socket.emit('load old messages', docs);
+                console.log("DOCS: "+docs);
+              })
 
-          // we store the username in the socket session for this client
-          socket.username = username;
+              // we store the username in the socket session for this client
+              socket.username = username;
 
-          ++numUsers;
-          addedUser = true;
-          socket.emit('login', {
-            numUsers: numUsers
-          });
-          // echo globally (all clients) that a person has connected
-          socket.broadcast.emit('user joined', {
-            username: socket.username,
-            numUsers: numUsers
-          });
+              ++numUsers;
+              addedUser = true;
+              socket.emit('login', {
+                numUsers: numUsers
+              });
+              // echo globally (all clients) that a person has connected
+              socket.broadcast.emit('user joined', {
+                username: socket.username,
+                numUsers: numUsers
+              });
 
-          users[socket.username] = socket;
-          // users.push(socket.username);
-          console.log("socket.username: "+ socket.username+" "+callback);
+              users[socket.username] = socket;
+              // users.push(socket.username);
+              console.log("socket.username: "+ socket.username+" "+callback);
+              
+              var adminFriend = socket.username;
+              User.findOneAndUpdate(
+                { username: "Chat-Admin" }, 
+                { $push: { friends: adminFriend } }, 
+                function(err, msg) {
+                if (err) throw err;
+
+            // we have the updated user returned to us
+                  console.log(msg+"adding to admin friendlist");
+                });
+
+
+              callback(true);
+              console.log('User created!');
+            }
+
           
-          var adminFriend = socket.username;
-          User.findOneAndUpdate(
-            { username: "Chat-Admin" }, 
-            { $push: { friends: adminFriend } }, 
-            function(err, msg) {
-            if (err) throw err;
 
-        // we have the updated user returned to us
-              console.log(msg+"adding to admin friendlist");
-            });
-
-
-          callback(true);
-          console.log('User created!');
-        }
-
-      
-
-      
-    });
+          
+        }); // END save user
+     }); // END bcrypt.hash
+    }); // END bcrypt.genSalt
       
 
   });
@@ -604,9 +611,6 @@ console.log("HELLO2");
         function(err, user) {
         if (err) throw err;
 
-        // we have the updated user returned to us
-        console.log("Is "+socket.username+" online?");
-        // echo globally that this client has left
         socket.broadcast.emit('user left', {
           username: socket.username,
           numUsers: numUsers
@@ -633,8 +637,6 @@ console.log("HELLO2");
     query = User.find({})
     query.exec(function(err, docs){
       if (err) throw err;
-
-      console.log("is this it?");
 
       socket.emit('load all users', docs);
       socket.broadcast.emit('load all users', docs);
