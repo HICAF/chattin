@@ -235,12 +235,8 @@ io.on('connection', function (socket) {
           
           console.log(user[0].username);
           bcrypt.compare(password, user[0].password, function(err, isMatch) {
-            console.log("password: "+password );
-            console.log("hash: "+ user[0].password);
-            console.log(err);
-            console.log(isMatch);
 
-            if (user[0].password == password) {
+            if (isMatch) {
               if (addedUser) return;
               socket.emit('load all groups', user);
     
