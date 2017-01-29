@@ -234,9 +234,9 @@ io.on('connection', function (socket) {
 
           
           console.log(user[0].username);
-          bcrypt.compare(password, user[0].passwor, function(err, isMatch) {
+          bcrypt.compare(password, user[0].password, function(err, isMatch) {
             console.log("password: "+password );
-            console.log("hash: "+hash);
+            console.log("hash: "+ user[0].password);
             console.log(err);
             console.log(isMatch);
 
