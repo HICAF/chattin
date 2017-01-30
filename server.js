@@ -9,7 +9,7 @@ var express = require('express');
 var fs = require('fs');
 var mysql = require('mysql');
 var app = express();
-var mongoose = require('mongoose');
+var sanitize = require('mongo-sanitize');
 mongoose.Promise = require('bluebird');
 var bcrypt = require('bcryptjs');
 
@@ -187,7 +187,10 @@ io.on('connection', function (socket) {
   
   socket.on('login user', function(username, password, callback){
 
-    User.find({ username: username }, function(err, user) {
+    var cleanedUsername = sanitize(username);
+    var cleanedPassword = sanitize(password);
+
+    User.find({ username: cleanedUsername }, function(err, user) {
       if (err){
         console.log('Bad login');
         callback(false);
@@ -197,7 +200,7 @@ io.on('connection', function (socket) {
 
           
           console.log(user[0].username);
-          bcrypt.compare(password, user[0].password, function(err, isMatch) {
+          bcrypt.compare(cleanedPassword, user[0].password, function(err, isMatch) {
 
             if (isMatch) {
               if (addedUser) return;
@@ -288,6 +291,8 @@ io.on('connection', function (socket) {
 
 
   socket.on('user add pend', function(penduser){
+
+
     User.findOneAndUpdate(
         { username: penduser }, 
         { $pull: { pending: socket.username } }, 
@@ -326,12 +331,16 @@ io.on('connection', function (socket) {
     var defAvaN= Math.floor((Math.random() * 6) + 1);
     var imgPath = '/img/standin/Avatar_0'+defAvaN+'.png';
 
+    var cleanedUsername = sanitize(username);
+    var cleanedPassword = sanitize(password);
+ 
+
     bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(password, salt, function(err, hash) {
+      bcrypt.hash(cleanedPassword, salt, function(err, hash) {
           // Store hash in your password DB. 
     
         var newUser = new User({
-          username: username,
+          username: cleanedUsername,
           password: hash,
           friends: "Chat-Admin",
           groups: "general-chat",
@@ -359,7 +368,7 @@ io.on('connection', function (socket) {
               })
 
               // we store the username in the socket session for this client
-              socket.username = username;
+              socket.username = cleanedUsername;
 
               ++numUsers;
               addedUser = true;
