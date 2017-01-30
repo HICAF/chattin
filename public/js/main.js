@@ -121,7 +121,7 @@ $(function() {
 
   function setSignUsername() {
     console.log("Signing");
-    username = cleanInput($signUsernameInput.text().trim());
+    username = cleanInput($signUsernameInput.val().trim());
     password = cleanInput($signPasswordInput.val());
     repPassword = cleanInput($signRepPasswordInput.val());
     
@@ -198,6 +198,12 @@ $(function() {
       username = null;
     }
   }
+
+  socket.on('give name', function (cleanedUsernameS) {
+    username = cleanedUsernameS;
+  }); 
+
+
   // Sends a chat message
   function sendMessage () {
     var message = $inputMessage.val();
