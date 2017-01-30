@@ -47,6 +47,7 @@ console.log("Server running..");
 var numUsers = 0;
 var users = {};
 var generalGroup = '';
+var activeGroup = '';
 
 io.on('connection', function (socket) {
   var addedUser = false;
@@ -155,7 +156,7 @@ io.on('connection', function (socket) {
         function(err, msg) {
         if (err) throw err;
 
-        socket.broadcast.emit('new message', {
+        io.to(activeGroup).broadcast.emit('new message', {
           username: socket.username,
           message: message
           });
@@ -214,6 +215,8 @@ io.on('connection', function (socket) {
 
             if (isMatch) {
               if (addedUser) return;
+              socket.join('general-chat');
+              activeGroup = 'general-chat';
               socket.emit('load all groups', user);
     
               console.log("trying to find messages");
@@ -375,6 +378,8 @@ io.on('connection', function (socket) {
 
           if (!err) {
             if (addedUser) return;
+              socket.join('general-chat');
+              activeGroup = 'general-chat';
 
               console.log("trying to find messages");
               var query = Chat.find({groupName: 'general-chat'}) 
@@ -398,7 +403,7 @@ io.on('connection', function (socket) {
               socket.emit('give name', socket.username);
               
               // echo globally (all clients) that a person has connected
-              socket.broadcast.emit('user joined', {
+              io.to('general-chat').broadcast.emit('user joined', {
                 username: socket.username,
                 numUsers: numUsers
               });
@@ -438,7 +443,7 @@ io.on('connection', function (socket) {
 
   // when the client emits 'typing', we broadcast it to others
   socket.on('typing', function () {
-    socket.broadcast.emit('typing', {
+    io.to(activeGroup).broadcast.emit('typing', {
       username: socket.username
     });
   }); 
@@ -451,7 +456,7 @@ io.on('connection', function (socket) {
 
   // when the client emits 'stop typing', we broadcast it to others
   socket.on('stop typing', function () {
-    socket.broadcast.emit('stop typing', {
+    io.to(activeGroup).broadcast.emit('stop typing', {
       username: socket.username
     });
   });
@@ -471,7 +476,7 @@ io.on('connection', function (socket) {
           // we have the updated user returned to us
           console.log("LOGGING THIS USER OUT "+user);
 
-          socket.broadcast.emit('user left', {
+          io.to('general-chat').broadcast.emit('user left', {
             username: socket.username,
             numUsers: numUsers
           });
@@ -543,7 +548,8 @@ io.on('connection', function (socket) {
   })
 
   socket.on('Chat change', function(groupName){
-
+            socket.join(groupName);
+            activeGroup = groupName;
             var query = Chat.find({groupName: groupName}) 
             query.sort('-created').limit(50).exec(function(err2, docs){
               if(err2) throw err2;
@@ -571,7 +577,7 @@ io.on('connection', function (socket) {
         function(err, user) {
         if (err) throw err;
 
-        socket.broadcast.emit('user left', {
+        io.to('general-chat').broadcast.emit('user left', {
           username: socket.username,
           numUsers: numUsers
         });
