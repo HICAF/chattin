@@ -26,27 +26,8 @@ server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
-
-
-// MongoClient.connect(uri, function(err, db) {
-//   db.close();
-// });
-
 var mongoose = require('mongoose');
 mongoose.connect(uri);
-
-
-
-
-// MongoClient.connect(uri, function(err, db) {
-//   if(err){
-//     console.log(err)
-//   }else{
-//     console.log("Connected to MongoDB");
-//   }
-
-//   db.close();
-// })
 
 
 
@@ -61,7 +42,6 @@ app.use(express.static(__dirname + '/public'));
 console.log("Server running..");
 
 // Chatroom
-
 var numUsers = 0;
 var users = {};
 var generalGroup = '';
@@ -75,9 +55,6 @@ io.on('connection', function (socket) {
       
     }
 
-  
-
-   
     if (group[0] !== undefined) {
       
 
@@ -168,11 +145,7 @@ io.on('connection', function (socket) {
     } else {
       callback(false);
       console.log("normal message");
-      // var newMsg = new Chat({username: socket.username, message: message});
-      // newMsg.save(function(err){
-      //   if(err) throw err;
-          
-      // });
+
       var newMsg = { username: socket.username, message: message };
       Chat.findOneAndUpdate(
         { groupName: desGroup }, 
@@ -282,16 +255,7 @@ io.on('connection', function (socket) {
     
      
     });
-    // User.find({ username: username }, function(err, user) {
-    //   if (err){
-    //     console.log('Bad login');
-    //     callback(false);
-    //   } 
-    //   if(!err){
-    //     updateUsernames();
-    //   }
-    // });
-      
+   
 
   });
 
@@ -460,30 +424,6 @@ io.on('connection', function (socket) {
       username: socket.username
     });
   });
-
-
-  // socket.on('log out', function () {
-  //   if (addedUser) {
-  //     --numUsers;
-
-
-  //     User.findOneAndUpdate({ username: socket.username }, { online: false }, function(err, user) {
-  //       if (err) throw err;
-
-  //       // we have the updated user returned to us
-  //       console.log(user+" Trying to log out!");
-  //       // echo globally that this client has left
-  //       socket.broadcast.emit('user left', {
-  //         username: socket.username,
-  //         numUsers: numUsers
-  //       });
-  //       updateUsernames();
-  //     });
-
-      
-      
-  //   }
-
 
   
 
