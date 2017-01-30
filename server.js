@@ -548,7 +548,9 @@ io.on('connection', function (socket) {
   })
 
   socket.on('Chat change', function(groupName){
+            console.log(socket.username+" leaving "+activeGroup);
             socket.leave(activeGroup);
+            console.log(socket.username+" joining "+groupName);
             socket.join(groupName);
             activeGroup = groupName;
             var query = Chat.find({groupName: groupName}) 
