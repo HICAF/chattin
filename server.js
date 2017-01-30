@@ -10,7 +10,7 @@ var fs = require('fs');
 var mysql = require('mysql');
 var app = express();
 var sanitize = require('mongo-sanitize');
-mongoose.Promise = require('bluebird');
+
 var bcrypt = require('bcryptjs');
 
 
@@ -27,6 +27,7 @@ server.listen(port, function () {
 });
 
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 mongoose.connect(uri);
 
 
