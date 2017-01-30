@@ -156,7 +156,7 @@ io.on('connection', function (socket) {
         function(err, msg) {
         if (err) throw err;
 
-        io.to(activeGroup).emit('new message', {
+        socket.broadcast.to(activeGroup).emit('new message', {
           username: socket.username,
           message: message
           });
@@ -237,7 +237,7 @@ io.on('connection', function (socket) {
                 numUsers: numUsers
               });
               // echo globally (all clients) that a person has connected
-              io.to('general-chat').emit('user joined', {
+              socket.broadcast.to('general-chat').emit('user joined', {
                 username: socket.username,
                 numUsers: numUsers
               });
@@ -403,7 +403,7 @@ io.on('connection', function (socket) {
               socket.emit('give name', socket.username);
               
               // echo globally (all clients) that a person has connected
-              io.to('general-chat').emit('user joined', {
+              socket.broadcast.to('general-chat').emit('user joined', {
                 username: socket.username,
                 numUsers: numUsers
               });
@@ -443,7 +443,7 @@ io.on('connection', function (socket) {
 
   // when the client emits 'typing', we broadcast it to others
   socket.on('typing', function () {
-    io.to(activeGroup).emit('typing', {
+    socket.broadcast.to(activeGroup).emit('typing', {
       username: socket.username
     });
   }); 
@@ -456,7 +456,7 @@ io.on('connection', function (socket) {
 
   // when the client emits 'stop typing', we broadcast it to others
   socket.on('stop typing', function () {
-    io.to(activeGroup).emit('stop typing', {
+    socket.broadcast.to(activeGroup).emit('stop typing', {
       username: socket.username
     });
   });
@@ -476,7 +476,7 @@ io.on('connection', function (socket) {
           // we have the updated user returned to us
           console.log("LOGGING THIS USER OUT "+user);
 
-          io.to('general-chat').emit('user left', {
+          socket.broadcast.to('general-chat').emit('user left', {
             username: socket.username,
             numUsers: numUsers
           });
@@ -578,7 +578,7 @@ io.on('connection', function (socket) {
         function(err, user) {
         if (err) throw err;
 
-        io.to('general-chat').emit('user left', {
+        socket.broadcast.to('general-chat').emit('user left', {
           username: socket.username,
           numUsers: numUsers
         });
