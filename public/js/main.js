@@ -121,7 +121,7 @@ $(function() {
 
   function setSignUsername() {
     console.log("Signing");
-    username = cleanInput($signUsernameInput.val().trim());
+    username = cleanInput($signUsernameInput.text().trim());
     password = cleanInput($signPasswordInput.val());
     repPassword = cleanInput($signRepPasswordInput.val());
     
