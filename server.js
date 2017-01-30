@@ -10,6 +10,7 @@ var fs = require('fs');
 var mysql = require('mysql');
 var app = express();
 var sanitize = require('mongo-sanitize');
+var sanitizeHtml = require('sanitize-html');
 
 var bcrypt = require('bcryptjs');
 
@@ -190,8 +191,10 @@ io.on('connection', function (socket) {
 
     var cleanedUsername = sanitize(username);
     var cleanedPassword = sanitize(password);
+    var cleanedUsernameHtml = sanitizeHtml(cleanedUsername);
+    var cleanedPasswordHtml = sanitizeHtml(cleanedPassword);
 
-    User.find({ username: cleanedUsername }, function(err, user) {
+    User.find({ username: cleanedUsernameHtml }, function(err, user) {
       if (err){
         console.log('Bad login');
         callback(false);
@@ -201,7 +204,7 @@ io.on('connection', function (socket) {
 
           
           console.log(user[0].username);
-          bcrypt.compare(cleanedPassword, user[0].password, function(err, isMatch) {
+          bcrypt.compare(cleanedPasswordHtml, user[0].password, function(err, isMatch) {
 
             if (isMatch) {
               if (addedUser) return;
@@ -334,14 +337,16 @@ io.on('connection', function (socket) {
 
     var cleanedUsername = sanitize(username);
     var cleanedPassword = sanitize(password);
+    var cleanedUsernameHtml = sanitizeHtml(cleanedUsername);
+    var cleanedPasswordHtml = sanitizeHtml(cleanedPassword);
  
 
     bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(cleanedPassword, salt, function(err, hash) {
+      bcrypt.hash(cleanedPasswordHtml, salt, function(err, hash) {
           // Store hash in your password DB. 
     
         var newUser = new User({
-          username: cleanedUsername,
+          username: cleanedUsernameHtml,
           password: hash,
           friends: "Chat-Admin",
           groups: "general-chat",
@@ -369,7 +374,7 @@ io.on('connection', function (socket) {
               })
 
               // we store the username in the socket session for this client
-              socket.username = cleanedUsername;
+              socket.username = cleanedUsernameHtml;
 
               ++numUsers;
               addedUser = true;
