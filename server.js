@@ -191,8 +191,14 @@ io.on('connection', function (socket) {
 
     var cleanedUsername = sanitize(username);
     var cleanedPassword = sanitize(password);
-    var cleanedUsernameHtml = sanitizeHtml(cleanedUsername);
-    var cleanedPasswordHtml = sanitizeHtml(cleanedPassword);
+    var cleanedUsernameHtml = sanitizeHtml(cleanedUsername, {
+      allowedTags: [],
+      allowedAttributes: []
+    });
+    var cleanedPasswordHtml = sanitizeHtml(cleanedPassword, {
+      allowedTags: [],
+      allowedAttributes: []
+    });
 
     User.find({ username: cleanedUsernameHtml }, function(err, user) {
       if (err){
@@ -337,8 +343,14 @@ io.on('connection', function (socket) {
 
     var cleanedUsername = sanitize(username);
     var cleanedPassword = sanitize(password);
-    var cleanedUsernameHtml = sanitizeHtml(cleanedUsername);
-    var cleanedPasswordHtml = sanitizeHtml(cleanedPassword);
+    var cleanedUsernameHtml = sanitizeHtml(cleanedUsername, {
+      allowedTags: [],
+      allowedAttributes: []
+    });
+    var cleanedPasswordHtml = sanitizeHtml(cleanedPassword, {
+      allowedTags: [],
+      allowedAttributes: []
+    });
  
 
     bcrypt.genSalt(10, function(err, salt) {
