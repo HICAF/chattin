@@ -44,10 +44,6 @@ $(function() {
   var groupInvNames = [];
 
 
-
-
-
-
   function addParticipantsMessage (data) {
     var message = '';
 
@@ -72,9 +68,7 @@ $(function() {
 
     // If the username is valid
       if (username) {
-        // socket.emit('checkUsername', username, function(){
 
-        // })
         // Tell the server your username
         socket.emit('login user', username, password, function(data){
           
@@ -219,7 +213,7 @@ $(function() {
       });
       // tell server to execute 'new message' and send along one parameter
       socket.emit('new message', message, desGroup, function(data){
-        // later
+        
       });
     }
   }
@@ -232,8 +226,8 @@ $(function() {
 
   // Adds the visual chat message to the message list
   function addChatMessage (data, options) {
+
     // Don't fade the message in if there is an 'X was typing'
-    // console.log("THIS DATA: "+data.username);
     var $typingMessages = getTypingMessages(data);
     options = options || {};
     if ($typingMessages.length !== 0) {
@@ -462,11 +456,6 @@ $(function() {
 
   // Click events
 
-  // Focus input when clicking anywhere on login page
-  // $loginPage.click(function () {
-  //   $currentInput.focus();
-  // });
-
   // Focus input when clicking on the message input's border
   $inputMessage.click(function () {
     $inputMessage.focus();
@@ -490,8 +479,6 @@ $(function() {
   socket.on('new message', function (data) {
     addChatMessage(data);
   });
-
-
 
   socket.on('load old messages', function(data){
       
@@ -528,8 +515,6 @@ $(function() {
   socket.on('whisper', function(data){
     addChatMessage(data);
   });
-
-
 
       socket.on('load all users', function(docs){
         var html = '';
@@ -573,8 +558,7 @@ $(function() {
                   console.log("setting "+docs[i].username+" on pending list "+i+" "+p);
                   pends += '<li class="pendUser"><div class="addFPendBtn WpendAdd" id="'+docs[i].username+'">Add</div><div class="addFPendBtn pendNo" id="'+docs[i].username+'">No</div><img class="userAvatar" src="'+docs[i].avatar.path+'" alt="avatar_id_'+i+'"><strong>'+docs[i].username+'</strong></li>'
                   
-                }
-                
+                }   
               }
 
 
@@ -584,10 +568,6 @@ $(function() {
         $('#makeGroupUsers').html(groupWinHtml);
         $("#pendingUsers").html(pends);
       });
-
-
-      
-      
 
 
       socket.on('load all groups', function(user){
@@ -603,8 +583,6 @@ $(function() {
 
       });
 
-
- 
     //Send friend request
     $(document).on('click', '.pendAdd', function (e) {
             var id = this.id;
@@ -656,8 +634,7 @@ $(function() {
                 })
             e.preventDefault();
     });
-
-    
+   
     $(document).on('click', '.invUser', function (e) {
 
       var specName = this.id;
@@ -697,7 +674,7 @@ $(function() {
         $('.chatTitle').text(specName);
 
         $( ".message" ).remove();
-        socket.emit('Chat change', specName, function(data){})
+        socket.emit('Chat change', specName)
 
 
       }
@@ -725,12 +702,6 @@ $(function() {
 
       e.preventDefault();
     });
-
-
-
-
-
-
 
       $("#signOutBtn").click(function(){
           
@@ -766,16 +737,8 @@ $(function() {
                 $(".signSwipe").removeClass("active");
                 $(".logSwipe").addClass("active");
               }
-
-
-
           });
-
       });
-
-    
-
-
 
   function addGroupToUsers(groupInv){
 
@@ -887,9 +850,3 @@ $(".signSwipe").click(function(){
 
 
 });
-
-
-
-
-
-

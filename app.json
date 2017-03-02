@@ -1,8 +1,0 @@
-{
-  "name": "Chattin",
-  "description": "A chat system for KEA",
-  "repository": "https://github.com/HICAF/chattin",
-  "logo": "http://node-js-sample.herokuapp.com/node.svg",
-  "keywords": ["node", "express", "MongoDB", "Socket.io", "chat"],
-  "image": "heroku/nodejs"
-}

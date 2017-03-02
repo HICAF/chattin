@@ -1,9 +1,3 @@
-// var express = require('express');
-// var app = express();
-// var server = require('http').createServer(app).listen(8080);;
-// var io = require('socket.io').listen(server);
-
-
 // Setup basic express server
 var express = require('express');
 var fs = require('fs');
@@ -31,16 +25,12 @@ var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 mongoose.connect(uri);
 
-
-
 // Get Mongoose Schemas
 var Chat = require('./lib/Chat');
 var User = require('./lib/User');
 
 // Routing
 app.use(express.static(__dirname + '/public'));
-
-
 console.log("Server running..");
 
 // Chatroom
@@ -60,7 +50,6 @@ io.on('connection', function (socket) {
 
     if (group[0] !== undefined) {
       
-
     } else {
       console.log("trying to create one more");
       var newGroup = new Chat({
@@ -76,11 +65,8 @@ io.on('connection', function (socket) {
         
         console.log('general-chat created!');
       });
-
-    }
- 
+    } 
   });
-  
 
   User.find({ username: 'Chat-Admin' }, function(err, user) {
     if (user == null || user == undefined) {
@@ -100,24 +86,13 @@ io.on('connection', function (socket) {
       });
 
       newUser.save(function(err2) {
-      if (err2) throw err2;
-        
+      if (err2) throw err2;        
         console.log('Chat-Admin created!');
-      });
-      
+      });     
     } else {
       console.log("ITS NOT CREATING");
-    }
- 
+    } 
   });
-
-
-  
-
-  
-
-  
-
 
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data, desGroup, callback) {
@@ -164,16 +139,8 @@ io.on('connection', function (socket) {
         // we have the updated user returned to us
         console.log(msg);
       });
-
-      
-
-    }
-
-    
+    }   
   });
-
-
-
 
   socket.on('find sign user', function(data){
     User.find({ username: data }, function(err, user) {
@@ -186,7 +153,6 @@ io.on('connection', function (socket) {
       console.log(user);
     });
   });
-
   
   socket.on('login user', function(username, password, callback){
 
@@ -207,8 +173,6 @@ io.on('connection', function (socket) {
         callback(false);
       }
         if(user.length > 0){
-
-
           
           console.log(user[0].username);
           bcrypt.compare(cleanedPasswordHtml, user[0].password, function(err, isMatch) {
@@ -262,19 +226,13 @@ io.on('connection', function (socket) {
               callback(false);
               console.log("bad password "+password+" | user.password "+user[0].password);
             }
-          });
-          
+          });        
         } else {
           callback(false);
             console.log("bad username "+username+" | user.username "+user.username);
-        }
-    
-     
+        }        
     });
-   
-
   });
-
 
   socket.on('user to pend', function(penduser){
     User.findOneAndUpdate(
@@ -289,7 +247,6 @@ io.on('connection', function (socket) {
       });
   });
 
-
   socket.on('deny pend', function(penduser){
     User.findOneAndUpdate(
         { username: penduser }, 
@@ -301,7 +258,6 @@ io.on('connection', function (socket) {
         console.log(penduser+" removed from pending for: "+socket.username);
       });
   });
-
 
   socket.on('user add pend', function(penduser){
 
@@ -337,13 +293,10 @@ io.on('connection', function (socket) {
       });
   });
 
-
-
   socket.on('add user', function (username, password, callback) {
     
     var defAvaN= Math.floor((Math.random() * 6) + 1);
     var imgPath = '/img/standin/Avatar_0'+defAvaN+'.png';
-
     var cleanedUsername = sanitize(username);
     var cleanedPassword = sanitize(password);
     var cleanedUsernameHtml = sanitizeHtml(cleanedUsername, {
@@ -355,7 +308,6 @@ io.on('connection', function (socket) {
       allowedAttributes: []
     });
  
-
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(cleanedPasswordHtml, salt, function(err, hash) {
           // Store hash in your password DB. 
@@ -375,7 +327,6 @@ io.on('connection', function (socket) {
             console.log('used name');
             callback(false);
           } 
-
           if (!err) {
             if (addedUser) return;
               socket.join('general-chat');
@@ -398,8 +349,7 @@ io.on('connection', function (socket) {
               socket.emit('login', {
                 numUsers: numUsers
               });
-
-              
+             
               socket.emit('give name', socket.username);
               
               // echo globally (all clients) that a person has connected
@@ -423,23 +373,13 @@ io.on('connection', function (socket) {
                   console.log(msg+"adding to admin friendlist");
                 });
 
-
               callback(true);
               console.log('User created!');
-            }
-
-          
-
-          
+            } 
         }); // END save user
      }); // END bcrypt.hash
     }); // END bcrypt.genSalt
-      
-
   });
-
-
-
 
   // when the client emits 'typing', we broadcast it to others
   socket.on('typing', function () {
@@ -452,23 +392,16 @@ io.on('connection', function (socket) {
     updateUsernames();
   })
 
-
-
   // when the client emits 'stop typing', we broadcast it to others
   socket.on('stop typing', function () {
     socket.broadcast.to(activeGroup).emit('stop typing', {
       username: socket.username
     });
   });
-
   
-
-  socket.on('loggedOutNow', function () {
-    
-
+  socket.on('loggedOutNow', function () {   
     if (addedUser) {
       --numUsers;
-
       User.findOneAndUpdate({ username: socket.username }, { online: false }, function(err, user) {
         if (!err) {
           console.log("HELLO3");
@@ -483,13 +416,7 @@ io.on('connection', function (socket) {
           updateUsernames();
           socket.username = '';
         }
-        
-
-
-
-      });
-
-      
+      });   
     }
   });
 
@@ -563,11 +490,6 @@ io.on('connection', function (socket) {
 
   })
 
-  
-
-
-
-
   // when the user disconnects.. perform this
   socket.on('disconnect', function () {
     if (addedUser) {
@@ -585,13 +507,9 @@ io.on('connection', function (socket) {
           numUsers: numUsers
         });
         updateUsernames();
-      });
-
-      
-      
+      });     
     }
   });
-
 
   socket.on('friend search', function(searchInput){
     query = User.find({ username: searchInput})
